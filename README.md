@@ -15,8 +15,7 @@ and the Flutter guide for
 Animate a single widget or multiple widgets beautifully with `FadeInAnimation`
 
 ## Preview
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+![demo_1](example/preview_gif.gif)
 
 
 ## Simple Usage
@@ -53,6 +52,7 @@ FadeInAnimation(
 
 
 ## Additional information
-When animating multiple widgets be sure to asign the`key` field of the `FadeInAnimation` widget.
+* When animating multiple widgets be sure to asign the`key` field of the `FadeInAnimation` widget.
+
 
 #### Don't forget to leave a like 👍

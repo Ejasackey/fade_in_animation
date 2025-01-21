@@ -6,15 +6,40 @@ enum AnimationType { scale, translate, scaleTranslate }
 
 class FadeInAnimation extends StatefulWidget {
   final Widget child;
+
+  /// Used in conjunction with `delayFactor` to determine how long this widget will wait before animating.
+  /// i.e `delayIndex` * `delayFactor` in milliseconds
   final int delayIndex;
+
+  /// used in conjuction with `delayIndex` to define how long this widget will wait before animating.
+  /// basically it's the delay step.
   final int delayFactor;
+
+  ///Defines the starting and ending scale of the widget when animation is in forward and reverse mode respectively.
+  ///it only works when `animationType` is set to `AnimationType.scale`.
   final double scaleFactor;
+
+  ///Defines the duration of the animation.
   final int animationDuration;
+
+  ///Use this to dictate the direction of the translation when animation is in forward mode.
+  ///it does not work when `animationType` is set to `AnimationType.scale`
   AnimationDirection direction;
+
+  ///Use this to dictate the direction of the translation when animation is in reverse mode.
+  ///it does not work when `animationType` is set to `AnimationType.scale`
   AnimationDirection? reverseDirection;
+
+  ///Defines the animation types available
   AnimationType animationType;
+
+  ///Defines the animation curves used when animation is in forward mode
   Curve forwardCurve;
+
+  ///Defines the animation curves used when animation is in reverse mode
   Curve reverseCurve;
+
+  ///Determines whether animation should play in forward or reverse, defauls is set to `false`
   final bool reverse;
 
   FadeInAnimation({

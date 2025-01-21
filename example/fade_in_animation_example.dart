@@ -20,7 +20,7 @@ class LoginAuthFields extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FadeInAnimation(
+            FadeInAnimation( // Note, there's no delay index on this because the default is 0
               key: GlobalKey(),
               direction: AnimationDirection.rightward,
               reverse: state == AuthFieldState.loginOff,
