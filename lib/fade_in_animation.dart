@@ -24,20 +24,20 @@ class FadeInAnimation extends StatefulWidget {
 
   ///Use this to dictate the direction of the translation when animation is in forward mode.
   ///it does not work when `animationType` is set to `AnimationType.scale`
-  AnimationDirection direction;
+  final AnimationDirection direction;
 
   ///Use this to dictate the direction of the translation when animation is in reverse mode.
   ///it does not work when `animationType` is set to `AnimationType.scale`
   AnimationDirection? reverseDirection;
 
   ///Defines the animation types available
-  AnimationType animationType;
+  final AnimationType animationType;
 
   ///Defines the animation curves used when animation is in forward mode
-  Curve forwardCurve;
+  final Curve forwardCurve;
 
   ///Defines the animation curves used when animation is in reverse mode
-  Curve reverseCurve;
+  final Curve reverseCurve;
 
   ///Determines whether animation should play in forward or reverse, defauls is set to `false`
   final bool reverse;
