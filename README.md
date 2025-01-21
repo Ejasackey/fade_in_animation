@@ -11,29 +11,48 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# FadeInAnimation
+Animate a single widget or multiple widgets beautifully with `FadeInAnimation`
 
-## Features
+## Preview
 
 TODO: List what your package can do. Maybe include images, gifs, or videos.
 
-## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+## Simple Usage
 
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+Import `fade_in_animation.dart`
 
 ```dart
-const like = 'sample';
+import "package:fade_in_animation/fade_in_animation.dart";
 ```
 
-## Additional information
+Wrap the target widget with `FadeInAnimation`
+```dart
+FadeInAnimation(
+    child: SomeWidget(),
+)
+```
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## Advanced Usage
+This is a higly customizable animation widget, so feel free to play with the fields.
+Description for each field is included, hover on the fields to learn more about them.
+```dart
+FadeInAnimation(
+    key: GlobalKey(),
+    delayIndex: 1,
+    forwardCurve: Curves.easeOutCubic,
+    animationType: AnimationType.scaleTranslate,
+    scaleFactor: .9,
+    animationDuration: 1000,
+    direction: AnimationDirection.rightward,
+    reverse: state == AuthFieldState.loginOff,
+    child: SomeWidget(),
+)
+```
+
+
+## Additional information
+When animating multiple widgets be sure to asign the`key` field of the `FadeInAnimation` widget.
+
+#### Don't forget to leave a like 👍
