@@ -1,6 +1,6 @@
 name: fade_in_animation
 description: "Wrap this widget around your wigets to add fade in animations"
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/Ejasackey/fade_in_animation
 repository: https://github.com/Ejasackey/fade_in_animation
 

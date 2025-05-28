@@ -4,6 +4,7 @@ enum AnimationDirection { upward, downward, rightward, leftward }
 
 enum AnimationType { scale, translate, scaleTranslate }
 
+// ignore: must_be_immutable
 class FadeInAnimation extends StatefulWidget {
   final Widget child;
 
@@ -42,6 +43,15 @@ class FadeInAnimation extends StatefulWidget {
   ///Determines whether animation should play in forward or reverse, defauls is set to `false`
   final bool reverse;
 
+  ///Determines whether the child should be animated or not
+  ///setting as false is equal to not having the animation wrapper at all
+  final bool animate;
+
+  ///Determines the offset of the translation animation.
+  ///The child is translated from  `translationOffset` to 0, with the direction based on
+  ///`direction`
+  final double translationOffset;
+
   FadeInAnimation({
     super.key,
     required this.child,
@@ -55,6 +65,8 @@ class FadeInAnimation extends StatefulWidget {
     this.scaleFactor = .9,
     this.forwardCurve = Curves.easeOutCubic,
     this.reverseCurve = Curves.easeOutCubic,
+    this.animate = true,
+    this.translationOffset = 30,
   }) {
     if (reverse && reverseDirection == null) {
       reverseDirection = switch (direction) {
@@ -104,52 +116,68 @@ class _FadeInAnimationState extends State<FadeInAnimation>
     super.dispose();
   }
 
+  //--------------------------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Opacity(
-          opacity: widget.reverse
-              ? (1 - opacityAnim.value.clamp(0, 1))
-              : opacityAnim.value.clamp(0, 1),
-          child: Transform.scale(
-            scale: widget.animationType == AnimationType.translate
-                ? 1
-                : widget.reverse
-                    ? 1 - ((1 - widget.scaleFactor) * trans.value)
-                    : widget.scaleFactor +
-                        ((1 - widget.scaleFactor) * trans.value),
-            child: Transform.translate(
-              // offset: Offset(0, 0),
-              offset: widget.animationType == AnimationType.scale
-                  ? Offset(0, 0)
-                  : getTranslateOffsets(),
-              child: child,
-            ),
-          ),
-        );
-      },
-      child: widget.child,
-    );
+    return widget.animate
+        ? AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Opacity(
+                opacity: widget.reverse
+                    ? (1 - opacityAnim.value.clamp(0, 1))
+                    : opacityAnim.value.clamp(0, 1),
+                child: Transform.scale(
+                  scale: widget.animationType == AnimationType.translate
+                      ? 1
+                      : widget.reverse
+                          ? 1 - ((1 - widget.scaleFactor) * trans.value)
+                          : widget.scaleFactor +
+                              ((1 - widget.scaleFactor) * trans.value),
+                  child: Transform.translate(
+                    // offset: Offset(0, 0),
+                    offset: widget.animationType == AnimationType.scale
+                        ? Offset(0, 0)
+                        : getTranslateOffsets(),
+                    child: child,
+                  ),
+                ),
+              );
+            },
+            child: widget.child,
+          )
+        : widget.child;
   }
 
   //--------------------------------------------------------------------------------------------
   Offset getTranslateOffsets() {
     return widget.reverse
         ? switch (widget.reverseDirection) {
-            AnimationDirection.upward => Offset(0, (-30 * trans.value)),
-            AnimationDirection.downward => Offset(0, (30 * trans.value)),
-            AnimationDirection.rightward => Offset((30 * trans.value), 0),
-            _ => Offset((-30 * trans.value), 0)
+            AnimationDirection.upward =>
+              Offset(0, (-widget.translationOffset * trans.value)),
+            AnimationDirection.downward =>
+              Offset(0, (widget.translationOffset * trans.value)),
+            AnimationDirection.rightward =>
+              Offset((widget.translationOffset * trans.value), 0),
+            _ => Offset((-widget.translationOffset * trans.value), 0)
           }
         : switch (widget.direction) {
-            AnimationDirection.upward => Offset(0, (30 - (30 * trans.value))),
-            AnimationDirection.downward =>
-              Offset(0, (-30 + (30 * trans.value))),
-            AnimationDirection.rightward =>
-              Offset((-30 + (30 * trans.value)), 0),
-            _ => Offset((30 - (30 * trans.value)), 0)
+            AnimationDirection.upward => Offset(
+                0,
+                (widget.translationOffset -
+                    (widget.translationOffset * trans.value))),
+            AnimationDirection.downward => Offset(
+                0,
+                (-widget.translationOffset +
+                    (widget.translationOffset * trans.value))),
+            AnimationDirection.rightward => Offset(
+                (-widget.translationOffset +
+                    (widget.translationOffset * trans.value)),
+                0),
+            _ => Offset(
+                (widget.translationOffset -
+                    (widget.translationOffset * trans.value)),
+                0)
           };
   }
 }
