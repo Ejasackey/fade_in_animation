@@ -48,7 +48,7 @@ class FadeInAnimation extends StatefulWidget {
   final bool animate;
 
   ///Determines the offset of the translation animation.
-  ///The child is translated from  `translationOffset` to 0, with the direction based on
+  ///The child is translated from  `translationOffset` to 0, or otherwise based on the
   ///`direction`
   final double translationOffset;
 
